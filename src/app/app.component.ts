@@ -3,6 +3,8 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import * as firebase from "firebase";
+
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 
@@ -17,6 +19,7 @@ export class MyApp {
   pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+    this.initFirebase();
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -36,9 +39,44 @@ export class MyApp {
     });
   }
 
+  initFirebase(){
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyD96xf7ycKrwdxGqPMKyWDfh9O5U1_AsRE",
+      authDomain: "omarks-b759c.firebaseapp.com",
+      databaseURL: "https://omarks-b759c.firebaseio.com",
+      projectId: "omarks-b759c",
+      storageBucket: "omarks-b759c.appspot.com",
+      messagingSenderId: "149578250050"
+    };
+    firebase.initializeApp(config);
+
+    firebase.auth().onAuthStateChanged(function(user) { 
+      console.log(JSON.stringify(user)) ;
+      if(user){
+        var currentUser = firebase.auth().currentUser;
+        var userId = currentUser.uid;
+        firebase.database().ref("users/" + userId).set({
+          username: currentUser.displayName,
+          email: currentUser.email,
+          profile_picture : currentUser.photoURL,
+          phoneNumber: currentUser.phoneNumber
+        });
+      }
+    });
+  }
+
+  
+
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
+
+  logOut(){
+    firebase.auth().signOut();
+  }
+
+  
 }
