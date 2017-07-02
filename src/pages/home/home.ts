@@ -21,6 +21,7 @@ export class HomePage {
   initFiebaseUI(){
     var uiConfig = {
       signInSuccessUrl: 'http://localhost:8100',
+      //signInSuccessUrl: 'https://omarks-b759c.firebaseapp.com/',
       signInOptions: [
         // Leave the lines as is for the providers you want to offer your users.
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,

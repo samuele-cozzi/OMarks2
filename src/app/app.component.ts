@@ -50,7 +50,7 @@ export class MyApp {
       messagingSenderId: "149578250050"
     };
     firebase.initializeApp(config);
-
+    
     firebase.auth().onAuthStateChanged(function(user) { 
       console.log(JSON.stringify(user)) ;
       if(user){
@@ -64,6 +64,7 @@ export class MyApp {
         });
       }
     });
+    
   }
 
   
