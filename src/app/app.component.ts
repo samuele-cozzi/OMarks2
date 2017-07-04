@@ -3,10 +3,12 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import * as firebase from "firebase";
-
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { LoginPage } from '../pages/login/login';
+
+import { Settings } from '../providers/settings';
+import { User } from '../providers/user';
 
 @Component({
   templateUrl: 'app.html'
@@ -14,12 +16,19 @@ import { ListPage } from '../pages/list/list';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any;
+  user: User;
+  settings: Settings;
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
-    this.initFirebase();
+  constructor(public platform: Platform
+  , public statusBar: StatusBar
+  , public splashScreen: SplashScreen
+  , settings: Settings, user: User) {
+    this.user = user;
+    this.settings = settings;
+    this.initializeSettings();
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -34,40 +43,27 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
+      console.log('platform is ready!');
+
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
   }
 
-  initFirebase(){
-    // Initialize Firebase
-    var config = {
-      apiKey: "AIzaSyD96xf7ycKrwdxGqPMKyWDfh9O5U1_AsRE",
-      authDomain: "omarks-b759c.firebaseapp.com",
-      databaseURL: "https://omarks-b759c.firebaseio.com",
-      projectId: "omarks-b759c",
-      storageBucket: "omarks-b759c.appspot.com",
-      messagingSenderId: "149578250050"
-    };
-    firebase.initializeApp(config);
-    
-    firebase.auth().onAuthStateChanged(function(user) { 
-      console.log(JSON.stringify(user)) ;
-      if(user){
-        var currentUser = firebase.auth().currentUser;
-        var userId = currentUser.uid;
-        firebase.database().ref("users/" + userId).set({
-          username: currentUser.displayName,
-          email: currentUser.email,
-          profile_picture : currentUser.photoURL,
-          phoneNumber: currentUser.phoneNumber
-        });
-      }
+  initializeSettings(){
+    this.user.ready().then(uid => {
+      console.log(uid);
+      this.user.login();
+      this.settings.ready(uid).then(settings => {
+        this.settings.setSettings(settings.val());
+        this.rootPage = HomePage;
+        console.log(settings.val());
+      }).catch(error => {
+        this.rootPage = LoginPage;
+        console.log(error);
+      });
     });
-    
-  }
-
-  
+  }  
 
   openPage(page) {
     // Reset the content nav to have just this page
@@ -76,8 +72,8 @@ export class MyApp {
   }
 
   logOut(){
-    firebase.auth().signOut();
+    this.user.logout();
+    this.settings.clean();
+    this.nav.setRoot(LoginPage);
   }
-
-  
 }

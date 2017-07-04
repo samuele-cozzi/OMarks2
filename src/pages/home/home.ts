@@ -1,40 +1,17 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-
-import * as firebase from "firebase";
-import * as firebaseui from "firebaseui";
+ 
+import {SettingsModel} from '../../models/settingsModel'
+import {Settings} from '../../providers/settings';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
+  user: SettingsModel = new SettingsModel();
 
-  constructor(public navCtrl: NavController) {
-
+  constructor(public navCtrl: NavController, settings: Settings) {
+    this.user = settings.getSettings();
   }
-
-  ionViewDidLoad() {
-    this.initFiebaseUI();
-  }
-
-  initFiebaseUI(){
-    var uiConfig = {
-      signInSuccessUrl: 'http://localhost:8100',
-      //signInSuccessUrl: 'https://omarks-b759c.firebaseapp.com/',
-      signInOptions: [
-        // Leave the lines as is for the providers you want to offer your users.
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        firebase.auth.EmailAuthProvider.PROVIDER_ID
-      ],
-      // Terms of service url.
-      //tosUrl: '<your-tos-url>'
-    };
-
-    // Initialize the FirebaseUI Widget using Firebase.
-    var ui = new firebaseui.auth.AuthUI(firebase.auth());
-    // The start method will wait until the DOM is loaded.
-    ui.start('#firebaseui-auth-container', uiConfig);
-  }
-
 }
