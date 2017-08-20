@@ -3,7 +3,13 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>OMarks</ion-title>
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-buttons end>
+      <button ion-button>
+        <ion-icon icon-right name="search"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 

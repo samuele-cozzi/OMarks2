@@ -9,6 +9,7 @@ import {SettingsModel} from '../models/settingsModel';
 export class Settings {
     
     settings: SettingsModel = {
+        uid: '',
         username: "",
         email: "",
         phoneNumber: "",
@@ -57,12 +58,17 @@ export class Settings {
     saveDefaultSettings(user:any){
         this.storage.set("user_key", user.uid);
 
+        this.settings.uid = user.uid;
         this.settings.username = user.displayName;
         this.settings.email = user.email;
         this.settings.profile_picture = user.photoURL;
         this.settings.phoneNumber = user.phoneNumber;
 
         firebase.database().ref("users/" + user.uid).set(this.settings);
+    }
+
+    saveSettings(settings:SettingsModel){
+        return firebase.database().ref("users/" + this.settings.uid).set(settings);
     }
 
     clean(){
