@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Settings</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <div padding>
+        <button ion-button secondary block (click)="refresh($event)">
+            Refresh 
+            <ion-icon name="refresh"></ion-icon>
+        </button>
+    </div>
+
+    <ion-list>
+        <ion-list-header>
+            Algolia Settings
+        </ion-list-header>
+        <ion-item>
+            <ion-label>Application Id</ion-label>
+            <ion-input type="text" [(ngModel)]='settings.algolia.applicationId' required></ion-input>
+        </ion-item>
+        
+        <ion-item>
+            <ion-label>Index</ion-label>
+            <ion-input type="text" [(ngModel)]='settings.algolia.index' required></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Api Key</ion-label>
+            <ion-input type="password" [(ngModel)]='settings.algolia.apiKey' required></ion-input>
+        </ion-item>
+
+        <div padding>
+            <button ion-button secondary block (click)="save($event)">Save</button>
+        </div>
+    </ion-list>
+
+    <ion-list>
+        <ion-item>
+            <h2>Powered by</h2>
+            <ion-avatar item-right>
+                <a href="http://www.algolia.com">
+                    <img src="build/images/algolia-logo.png">
+                </a>
+            </ion-avatar>
+        </ion-item>
+
+        <ion-item>
+            <h2>Code with</h2>
+            <ion-avatar item-right>
+                <a href="http://ionic.io/2">
+                    <img src="build/images/ionic2-logo.png">
+                </a>
+            </ion-avatar>
+            <ion-avatar item-right>
+                <a href="https://angular.io/">
+                    <img src="build/images/angular-logo.png">
+                </a>
+            </ion-avatar>
+        </ion-item>
+    </ion-list>
+    
+</ion-content>
