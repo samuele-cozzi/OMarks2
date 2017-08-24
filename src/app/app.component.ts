@@ -11,6 +11,8 @@ import { SettingPage } from '../pages/setting/setting';
 import { Settings } from '../providers/settings';
 import { User } from '../providers/user';
 
+import { SettingsModel } from '../models/settingsModel';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -19,16 +21,17 @@ export class MyApp {
 
   rootPage: any;
   user: User;
-  settings: Settings;
+  settingsProvider: Settings;
+  userSettings : SettingsModel = new SettingsModel();
 
   pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform
   , public statusBar: StatusBar
   , public splashScreen: SplashScreen
-  , settings: Settings, user: User) {
+  , settingsProvider: Settings, user: User) {
     this.user = user;
-    this.settings = settings;
+    this.settingsProvider = settingsProvider;
     this.initializeSettings();
     this.initializeApp();
 
@@ -56,9 +59,10 @@ export class MyApp {
     this.user.ready().then(uid => {
       console.log(uid);
       this.user.login();
-      this.settings.ready(uid).then(settings => {
-        this.settings.setSettings(settings.val());
+      this.settingsProvider.ready(uid).then(settings => {
+        this.settingsProvider.setSettings(settings.val());
         this.rootPage = HomePage;
+        this.userSettings = settings.val();
         console.log(settings.val());
       }).catch(error => {
         this.rootPage = LoginPage;
@@ -75,7 +79,7 @@ export class MyApp {
 
   logOut(){
     this.user.logout();
-    this.settings.clean();
+    this.settingsProvider.clean();
     this.nav.setRoot(LoginPage);
   }
 }

@@ -1,3 +1,60 @@
 page-home {
 
 }
+
+ion-card-content {
+    height: 140px;
+}
+
+ion-card section {
+    height: 140px;
+}
+
+
+
+.content {
+  width: 100%;
+}
+
+.content ul {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.content ul li {
+  list-style: none;
+  padding: 0;
+  float: left;
+  width: 100%;
+}
+
+.content ul li:first-child {
+  border-left: none;
+}
+
+
+@media screen and (min-width: 500px) {
+  .content ul li {
+    width: calc(100% / 2);
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .content ul li {
+    width: calc(100% / 3);
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .content ul li {
+    width: calc(100% / 4);
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .content ul li {
+    width: calc(100% / 5);
+  }
+}
+
