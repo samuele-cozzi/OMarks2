@@ -55,20 +55,33 @@ export class MyApp {
     });
   }
 
-  initializeSettings(){
-    this.user.ready().then(uid => {
-      console.log(uid);
-      this.user.login();
-      this.settingsProvider.ready(uid).then(settings => {
-        this.settingsProvider.setSettings(settings.val());
-        this.rootPage = HomePage;
-        this.userSettings = settings.val();
-        console.log(settings.val());
-      }).catch(error => {
-        this.rootPage = LoginPage;
-        console.log(error);
-      });
-    });
+  async initializeSettings(){
+    //get user id
+    var _uid = await this.user.ready();
+    if (_uid != null)  {
+      var _settings = await this.settingsProvider.ready(_uid);
+      this.userSettings = _settings;
+      this.rootPage = HomePage;
+    } else {
+      console.log('_uid null');
+      this.rootPage = LoginPage;
+      var _change = await this.settingsProvider.changeAuth();
+      console.log(_change);
+    }
+
+
+    // this.user.ready().then(uid => {
+    //   console.log(uid);
+    //   this.settingsProvider.ready(uid).then(settings => {
+    //     this.settingsProvider.setSettings(settings.val());
+    //     this.rootPage = HomePage;
+    //     this.userSettings = settings.val();
+    //     console.log(settings.val());
+    //   }).catch(error => {
+    //     this.rootPage = LoginPage;
+    //     console.log(error);
+    //   });
+    // });
   }  
 
   openPage(page) {

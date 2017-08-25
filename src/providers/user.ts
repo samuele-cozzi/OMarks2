@@ -10,8 +10,9 @@ export class User {
   constructor(public storage: Storage) {
   }
 
-  ready(){
-    return this.storage.get(this.user_key);
+  async ready(){
+    var result = await this.storage.get(this.user_key);
+    return result;
   }
 
   login(){

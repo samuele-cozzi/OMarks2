@@ -34,12 +34,39 @@ export class Settings {
         firebase.initializeApp(config);
     }
 
-    ready(uid: string){
-        return firebase.database().ref("users/" + uid).once('value');
+    async ready(uid: string){
+        var result = await firebase.database().ref("users/" + uid).once('value');
+        (result.val() != null) && (this.settings = result.val());
+        return this.settings;
     }
 
     getSettings(){
         return this.settings;
+    }
+
+    async changeAuth (){
+        // firebase.auth().onAuthStateChanged(user => {
+        //     if(user){
+        //         this.saveDefaultSettings(user);
+        //     }
+        // });
+
+        firebase.auth().onAuthStateChanged((user => this.changeAuthSuccess(user)));
+    }
+
+    async changeAuthSuccess(user){
+        if(user){
+            console.log('onAuthStateChanged: ' + user.uid);
+            var _settings = await this.ready(user.uid);
+            console.log(_settings);
+            if(_settings.uid == ""){
+                this.saveDefaultSettings(user);
+                window.location.reload();
+            } else {
+                this.storage.set("user_key", user.uid);
+                this.settings = _settings;
+            }
+        }
     }
 
     setSettings(settings: SettingsModel){
@@ -48,6 +75,10 @@ export class Settings {
         } else {
             firebase.auth().onAuthStateChanged(user => {
                 if(user){
+                    // this.ready(user.uid).then(settings => {
+                    //      console.log(settings.val());
+                    //      (settings.val() == null) && this.saveDefaultSettings(user);
+                    // })
                     this.saveDefaultSettings(user);
                 }
             });
