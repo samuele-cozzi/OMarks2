@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{item.given_title}}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+
+<ion-content padding class="code_item">
+    <ion-list>
+
+      <ion-item>
+        <ion-label stacked>Title</ion-label>
+        <ion-input type="text" [(ngModel)]="item.given_title"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Url</ion-label>
+        <ion-input type="text" [(ngModel)]="item.given_url"></ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="item.image">
+        <ion-label stacked>Picture</ion-label>
+        <ion-input type="text" [(ngModel)]="item.image.src"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!item.image">
+        <ion-label stacked>Picture</ion-label>
+        <ion-input type="text" [(ngModel)]="item.image_src"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Description</ion-label>
+        <ion-textarea rows="6" [(ngModel)]="item.excerpt"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Tags - separated by comma (",")</ion-label>
+        <ion-input type="text" [(ngModel)]="item.tags"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Favorite</ion-label>
+        <ion-toggle [(ngModel)]="item.favorite"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Ranking</ion-label>
+        <ion-input type="number" [(ngModel)]="item.time_read"></ion-input>
+      </ion-item>
+
+    </ion-list>
+
+    <div padding>
+      <button primary block (click)="save()">Save</button>
+      <button primary block *ngIf="item.favorite != 1" (click)="star()">Star</button>
+      <!--<button primary block (click)="code()">Code</button>-->
+      <button primary block (click)="delete()">Delete</button>
+    </div>      
+</ion-content>
+
+
+ 

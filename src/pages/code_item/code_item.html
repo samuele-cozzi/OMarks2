@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{item.given_title}}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+
+<ion-content padding class="code_item">
+
+    <ion-item>
+        <ion-label stacked>json</ion-label>
+        <ion-textarea [(ngModel)]="item_string"></ion-textarea>
+        <button clear item-right (click)="save()">Save</button>
+    </ion-item>
+      
+</ion-content>
+
+
+ 

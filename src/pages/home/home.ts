@@ -1,18 +1,25 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, Searchbar, ToastController } from 'ionic-angular';
  
-import {SettingsModel} from '../../models/settingsModel'
+import {SettingsModel} from '../../models/settingsModel';
+import {Marks} from '../../models/marks';
+import {EditItemPage} from '../edit_item/edit_item';
 import {Settings} from '../../providers/settings';
 import {AlgoliaService} from '../../providers/algolia';
 
+
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
 })
 export class HomePage {
   @ViewChild('searchBar') searchBar: Searchbar;
   
-  showSearch: boolean = false;
+  private showSearch: boolean = false;
+  private page: number = 0;
+  private query: string = "";
+  private key: string = "";
+  private value: string = "";
   user: SettingsModel = new SettingsModel();
 
   dashboardItems: any[] = [];
@@ -101,11 +108,56 @@ export class HomePage {
     });
   }
 
-  getSearch(query, page){
-    this.algoliaService.get_query(query, 20, page).then(items => {
-      this.searchItems = items;
-    });
+  async getSearch(query, page){
+    (this.query != query) && (this.initParams());
+    this.query = query;
+    var items = await this.algoliaService.get_query(query, 20, page).then(); 
+    for (var i = 0; i < items.length; i++) {
+      this.searchItems.push( items[i] );
+    }
+    return items.length;
   }
+
+  async getSearchFacets(key, value){
+    (this.key != key || this.value != value) && (this.initParams());
+    this.key = key;
+    this.value = value;
+    var items = await this.algoliaService.get_filtered_facets(key, value, 20, this.page).then(); 
+    for (var i = 0; i < items.length; i++) {
+      this.searchItems.push( items[i] );
+    }
+    return items.length;
+  }
+
+  private initParams()
+  {
+    this.searchItems = [];
+    this.page = 0;
+  }
+
+  async doInfinite(infiniteScroll) {
+    if (this.searchItems.length > 0)
+    {
+        this.page ++;
+        var newItemsLength = 0;
+        console.log('Begin async operation: ' + this.page);
+        if (this.query.trim() != '') {
+          newItemsLength = await this.getSearch(this.query,this.page);
+          (newItemsLength == 0) && infiniteScroll.enable(false);
+          infiniteScroll.complete();
+        } 
+        else if (this.key != "" && this.value != "")
+        {
+          newItemsLength = await this.getSearchFacets(this.key, this.value);
+          (newItemsLength == 0) && infiniteScroll.enable(false);
+          infiniteScroll.complete();
+        }
+    }
+    else
+    {
+        infiniteScroll.complete();
+    }
+}
 
   /* DASHBOARD EVENTS */
   open(item,event){
@@ -115,23 +167,17 @@ export class HomePage {
     window.open(item.given_url)
   }
 
-  // create(item){
-  //     this.navCtrl.push(EditItemPage, {
-  //         item:  JSON.stringify(new Marks(), null, 2)
-  //     });
-  // }
+  create(item){
+      this.navCtrl.push(EditItemPage, {
+          item:  JSON.stringify(new Marks(), null, 2)
+      });
+  }
 
-  // edit(item){
-  //   this.navCtrl.push(EditItemPage, {
-  //     item: JSON.stringify(item, null, 2)
-  //   });
-  // }
-
-  // editCode(item){
-  //   this.navCtrl.push(CodeItemPage, {
-  //       item: JSON.stringify(item, null, 2)
-  //   });
-  // }
+  edit(item){
+    this.navCtrl.push(EditItemPage, {
+      item: JSON.stringify(item, null, 2)
+    });
+  }
 
   up(item){
     item.time_read ++;

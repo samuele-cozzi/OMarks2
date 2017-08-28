@@ -14,6 +14,10 @@
   </ion-navbar>
 </ion-header>
 
+<button ion-button fab-fixed fab-right fab-bottom round (click)="create(item)" *ngIf="showSearch">
+  <ion-icon name="add"></ion-icon>
+</button>
+
 <ion-content padding >
   <div class="content" *ngIf="!showSearch">
     <ul>
@@ -42,16 +46,16 @@
             </section>
           </div>
           <ion-item>
-            <button primary clear item-right (click)="up(item)">
+            <button ion-button primary clear item-right (click)="up(item)">
                     <ion-icon name="arrow-dropup-circle" ></ion-icon>
                   </button>
-            <button primary clear item-right (click)="down(item)">
+            <button ion-button primary clear item-right (click)="down(item)">
                     <ion-icon name="arrow-dropdown-circle" ></ion-icon>
                   </button>
-            <button primary clear item-right (click)="remove_star(item)">
+            <button ion-button primary clear item-right (click)="remove_star(item)">
                     <ion-icon name="md-star" ></ion-icon>
                   </button>
-            <button primary clear item-right (click)="edit(item)">
+            <button ion-button primary clear item-right (click)="edit(item)">
                     <ion-icon name="create"></ion-icon>
                   </button>
           </ion-item>
@@ -62,7 +66,7 @@
   </div>
 
   <ion-list *ngIf="showSearch && searchItems.length == 0">
-    <ion-item *ngFor="let facet of searchFacets" (click)="goto(facet.key, facet.value)">
+    <ion-item *ngFor="let facet of searchFacets" (click)="getSearchFacets(facet.key, facet.value)">
       <ion-icon name="folder" item-left></ion-icon>
       {{facet.value}}
     </ion-item>
@@ -90,31 +94,31 @@
         <p>{{item.given_url}}</p>
         <p>{{item.excerpt}}</p>
         <h3>
-          <!-- <button outline *ngFor="let tag of item.tags | split">{{tag}}</button> -->
+          <button ion-button outline *ngFor="let tag of item.tags | split">{{tag}}</button>
         </h3>
       </ion-item>
       <ion-item-options>
-        <button primary *ngIf="item.favorite == 1" (click)="remove_star(item)">
+        <button ion-button primary *ngIf="item.favorite == 1" (click)="remove_star(item)">
             <ion-icon name="md-star"></ion-icon>
           </button>
-        <button primary *ngIf="item.favorite != 1" (click)="add_star(item)">
+        <button  ion-button primary *ngIf="item.favorite != 1" (click)="add_star(item)">
             <ion-icon name="star-outline"></ion-icon>
           </button>
-        <button secondary (click)="edit(item)">
+        <button ion-button color="secondary" (click)="edit(item)">
             <ion-icon name="create"></ion-icon>
           </button>
-        <button dark (click)="editCode(item)">
+        <!-- <button dark (click)="editCode(item)">
             <ion-icon name="code"></ion-icon>
-        </button>
-        <button danger (click)="delete(item)">
+        </button> -->
+        <button ion-button color="danger" (click)="delete(item)">
             <ion-icon name="trash"></ion-icon>
           </button>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
 
-  <!-- <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles">
     </ion-infinite-scroll-content>
-  </ion-infinite-scroll> -->
+  </ion-infinite-scroll>
 </ion-content>

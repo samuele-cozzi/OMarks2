@@ -7,7 +7,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { EditItemPage } from '../pages/edit_item/edit_item';
 import { LoginPage } from '../pages/login/login';
 import { SettingPage} from '../pages/setting/setting'
 
@@ -19,13 +19,16 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SettingsModel } from '../models/settingsModel';
 
+import {SplitPipe} from '../pipes/split';
+
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage,
+    EditItemPage,
     LoginPage,
-    SettingPage
+    SettingPage,
+    SplitPipe
   ],
   imports: [
     BrowserModule,
@@ -37,7 +40,7 @@ import { SettingsModel } from '../models/settingsModel';
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
+    EditItemPage,
     LoginPage,
     SettingPage
   ],
