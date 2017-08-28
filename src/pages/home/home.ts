@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, Searchbar, ToastController } from 'ionic-angular';
+import { NavController, Searchbar, ToastController, NavParams } from 'ionic-angular';
  
 import {SettingsModel} from '../../models/settingsModel';
 import {Marks} from '../../models/marks';
@@ -34,18 +34,26 @@ export class HomePage {
    * @param algolia 
    */
   constructor(public navCtrl: NavController, 
+    private navParams: NavParams,
     private toastCtrl: ToastController, 
     settings: Settings, 
     private algoliaService: AlgoliaService) {
     
       this.user = settings.getSettings();
+      this.key = navParams.get('key');
+      this.value = navParams.get('value');
   }
 
   /**
    * 
    */
   ionViewDidLoad() {
-    this.getDashboard();
+    if (this.key !== undefined && this.value !== undefined){
+      this.getSearchFacets(this.key, this.value);
+      this.showSearch = true;
+    } else {
+      this.getDashboard();
+    }
   }
 
   /* HEADER_EVENTS */
@@ -129,8 +137,7 @@ export class HomePage {
     return items.length;
   }
 
-  private initParams()
-  {
+  private initParams() {
     this.searchItems = [];
     this.page = 0;
   }
@@ -157,7 +164,7 @@ export class HomePage {
     {
         infiniteScroll.complete();
     }
-}
+  }
 
   /* DASHBOARD EVENTS */
   open(item,event){

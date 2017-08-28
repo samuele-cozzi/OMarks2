@@ -18,7 +18,8 @@ export class Settings {
             applicationId:"aaa",
             apiKey:"bbb",
             index: "ccc"
-        }
+        },
+        menu: []
     };
 
     constructor(public storage: Storage) {

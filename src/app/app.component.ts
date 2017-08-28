@@ -11,6 +11,8 @@ import { Settings } from '../providers/settings';
 import { User } from '../providers/user';
 
 import { SettingsModel } from '../models/settingsModel';
+import { MenuSettings } from '../models/menuSettings';
+
 
 @Component({
   templateUrl: 'app.html'
@@ -23,7 +25,7 @@ export class MyApp {
   settingsProvider: Settings;
   userSettings : SettingsModel = new SettingsModel();
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<MenuSettings>;
 
   constructor(public platform: Platform
   , public statusBar: StatusBar
@@ -37,6 +39,8 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
+      { title: 'Readme Later', component: HomePage, key: "facets.tag", value: "read-me-later"},
+      { title: 'Cloud Services', component: HomePage, key: "facets.tag", value: "cloudservices"},
       { title: 'Settings', component: SettingPage}
     ];
 
@@ -66,26 +70,15 @@ export class MyApp {
       var _change = await this.settingsProvider.changeAuth();
       console.log(_change);
     }
-
-
-    // this.user.ready().then(uid => {
-    //   console.log(uid);
-    //   this.settingsProvider.ready(uid).then(settings => {
-    //     this.settingsProvider.setSettings(settings.val());
-    //     this.rootPage = HomePage;
-    //     this.userSettings = settings.val();
-    //     console.log(settings.val());
-    //   }).catch(error => {
-    //     this.rootPage = LoginPage;
-    //     console.log(error);
-    //   });
-    // });
   }  
 
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    this.nav.push(page.component, {
+      key: page.key,
+      value: page.value
+    });
   }
 
   logOut(){
