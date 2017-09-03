@@ -15,11 +15,16 @@ export class Settings {
         phoneNumber: "",
         profile_picture: "",
         algolia: {
-            applicationId:"aaa",
-            apiKey:"bbb",
-            index: "ccc"
+            applicationId:"M90FC3UY18",
+            apiKey:"10c0596a79389d1e359ea13707208c4a",
+            index: "oMarks2"
         },
-        menu: []
+        menu: [
+            { title: 'Home', component: 'Home' },
+            { title: 'Readme Later', component: 'Home', key: "facets.tag", value: "read-me-later"},
+            { title: 'Cloud Services', component: 'Home', key: "facets.tag", value: "cloudservices"},
+            { title: 'Settings', component: 'Settings'}
+          ]
     };
 
     constructor(public storage: Storage) {
@@ -32,12 +37,14 @@ export class Settings {
             storageBucket: "omarks-b759c.appspot.com",
             messagingSenderId: "149578250050"
         };
-        firebase.initializeApp(config);
+        (!firebase.apps.length) && firebase.initializeApp(config);
     }
 
     async ready(uid: string){
         var result = await firebase.database().ref("users/" + uid).once('value');
+        var defaultSettings = this.settings;
         (result.val() != null) && (this.settings = result.val());
+        (typeof (this.settings.menu) == 'undefined') && (this.settings.menu = defaultSettings.menu);
         return this.settings;
     }
 

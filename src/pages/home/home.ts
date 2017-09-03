@@ -1,5 +1,5 @@
 import { Component, ViewChild, HostListener } from '@angular/core';
-import { NavController, Searchbar, ToastController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, Searchbar, ToastController, NavParams } from 'ionic-angular';
 
 import { SettingsModel } from '../../models/settingsModel';
 import { Marks } from '../../models/marks';
@@ -12,6 +12,10 @@ import { AlgoliaService } from '../../providers/algolia';
   selector: 'page-home',
   templateUrl: 'home.html',
 })
+@IonicPage({
+  name: "Home"
+})
+
 export class HomePage {
   @ViewChild('searchBar') searchBar: Searchbar;
   @HostListener('window:keyup', ['$event'])

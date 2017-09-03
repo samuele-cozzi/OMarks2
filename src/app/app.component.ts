@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+//import { Deeplinks } from '@ionic-native/deeplinks';
 
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
@@ -31,18 +32,11 @@ export class MyApp {
   , public statusBar: StatusBar
   , public splashScreen: SplashScreen
   , settingsProvider: Settings, user: User) {
+    
     this.user = user;
     this.settingsProvider = settingsProvider;
     this.initializeSettings();
     this.initializeApp();
-
-    // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'Readme Later', component: HomePage, key: "facets.tag", value: "read-me-later"},
-      { title: 'Cloud Services', component: HomePage, key: "facets.tag", value: "cloudservices"},
-      { title: 'Settings', component: SettingPage}
-    ];
 
   }
 
@@ -63,6 +57,7 @@ export class MyApp {
     if (_uid != null)  {
       var _settings = await this.settingsProvider.ready(_uid);
       this.userSettings = _settings;
+      this.pages = _settings.menu;
       this.rootPage = HomePage;
     } else {
       console.log('_uid null');

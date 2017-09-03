@@ -1,0 +1,21 @@
+import { NgModule } from '@angular/core';
+import { IonicPageModule } from 'ionic-angular';
+
+import { HomePage } from './home';
+
+import {SplitPipe} from '../../pipes/split';
+
+
+@NgModule({
+  declarations: [
+    HomePage
+    ,SplitPipe
+  ],
+  imports: [
+    IonicPageModule.forChild(HomePage)
+  ],
+  entryComponents: [
+    HomePage
+  ]
+})
+export class HomePageModule { }

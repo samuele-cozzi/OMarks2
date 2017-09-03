@@ -1,9 +1,12 @@
 import {Component} from '@angular/core';
-import {NavController, ToastController} from 'ionic-angular';
+import {IonicPage, NavController, ToastController} from 'ionic-angular';
 
 import {SettingsModel} from '../../models/settingsModel';
 import { Settings } from '../../providers/settings';
 
+@IonicPage({
+  name: "Settings"
+})
 @Component({
   selector: 'page-setting',
   templateUrl: 'setting.html'
