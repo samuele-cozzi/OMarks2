@@ -186,7 +186,7 @@ export class HomePage {
   /* DASHBOARD EVENTS */
   open(item, event) {
     typeof item.time_read == "string" && (item.time_read = 0);
-
+    item.time_read++;
     this.algoliaService.save_item(item);
     window.open(item.given_url)
   }
