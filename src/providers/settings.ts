@@ -20,10 +20,7 @@ export class Settings {
             index: "oMarks2"
         },
         menu: [
-            { title: 'Home', component: 'Home' },
-            { title: 'Readme Later', component: 'Home', key: "facets.tag", value: "read-me-later"},
-            { title: 'Cloud Services', component: 'Home', key: "facets.tag", value: "cloudservices"},
-            { title: 'Settings', component: 'Settings'}
+            { title: 'Readme Later', component: 'Home', key: "facets.tag", value: "read-me-later"}
           ]
     };
 

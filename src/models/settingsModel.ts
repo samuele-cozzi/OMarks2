@@ -10,4 +10,6 @@ export class SettingsModel {
     
     public algolia: AlgoliaSettings = new AlgoliaSettings();
     public menu: MenuSettings[] = new Array<MenuSettings>(); 
+
+    public menu_string?: string;
 }
