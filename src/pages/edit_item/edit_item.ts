@@ -5,6 +5,9 @@ import {AlgoliaService} from '../../providers/algolia';
 import {HomePage} from '../home/home';
 import {CodeItemPage} from '../code_item/code_item';
 
+import { SettingsModel } from '../../models/settingsModel';
+import { Settings } from '../../providers/settings';
+
 @Component({
   selector: 'page-edit-item',
   templateUrl: 'edit_item.html'
@@ -13,10 +16,16 @@ export class EditItemPage implements OnInit{
   item: any; 
   message: string = "";
 
+  private user: SettingsModel = new SettingsModel();
+
   constructor(private navCtrl: NavController
     , private navParams: NavParams
     , private toastCtrl: ToastController
-    , private searchServices: AlgoliaService) {}
+    , private searchServices: AlgoliaService
+    , private settingsProvider: Settings) {
+
+      this.user = settingsProvider.getSettings();
+    }
 
   ngOnInit(): void {
     this.item = JSON.parse(this.navParams.get('item'));
@@ -33,6 +42,9 @@ export class EditItemPage implements OnInit{
     this.item['facets.tag'] = this.item.tags.split(',');
 
     this.item.time_read = Number.parseFloat(this.item.time_read);
+    this.user.dashboard = [];
+    this.settingsProvider.setSettings(this.user);
+
     this.searchServices.save_item(this.item)
         .then(x => {
           let toast = this.toastCtrl.create({

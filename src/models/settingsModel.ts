@@ -12,4 +12,5 @@ export class SettingsModel {
     public menu: MenuSettings[] = new Array<MenuSettings>(); 
 
     public menu_string?: string;
+    public dashboard?: any[] = new Array();
 }
