@@ -222,11 +222,12 @@ export class HomePage {
 
   async up(item) {
     try {
-      var i = this.user.dashboard.indexOf(item);
+      var i = this.user.dashboard.findIndex(x => x.dashboard_ranking == i);
+      var j = this.user.dashboard.findIndex(x => x.dashboard_ranking == i-1);
       this.user.dashboard[i].dashboard_ranking = i-1;
-      this.user.dashboard[i-1].dashboard_ranking = i;
+      this.user.dashboard[j].dashboard_ranking = i;
       await this.algoliaService.save_item(this.user.dashboard[i]);
-      await this.algoliaService.save_item(this.user.dashboard[i-1]);
+      await this.algoliaService.save_item(this.user.dashboard[j]);
       this.settings.saveSettings(this.user);
       this.toastSavedDashboard();
     } catch(err) {
@@ -236,11 +237,12 @@ export class HomePage {
 
   async down(item) {
     try {
-      var i = this.user.dashboard.indexOf(item);
+      var i = this.user.dashboard.findIndex(x => x.dashboard_ranking == i);
+      var j = this.user.dashboard.findIndex(x => x.dashboard_ranking == i-1);
       this.user.dashboard[i].dashboard_ranking = i+1;
-      this.user.dashboard[i+1].dashboard_ranking = i;
+      this.user.dashboard[j].dashboard_ranking = i;
       await this.algoliaService.save_item(this.user.dashboard[i]);
-      await this.algoliaService.save_item(this.user.dashboard[i+1]);
+      await this.algoliaService.save_item(this.user.dashboard[j]);
       this.settings.saveSettings(this.user);
       this.toastSavedDashboard();
     } catch(err) {

@@ -10,8 +10,8 @@ export class User {
   constructor(public storage: Storage) {
   }
 
-  async ready(){
-    var result = await this.storage.get(this.user_key);
+  ready(){
+    var result = this.storage.get(this.user_key);
     return result;
   }
 

@@ -38,6 +38,7 @@ export class Settings {
     }
 
     async ready(uid: string){
+        this.settings.uid = uid;
         var result = await firebase.database().ref("users/" + uid).once('value');
         var defaultSettings = this.settings;
         (result.val() != null) && (this.settings = result.val());
