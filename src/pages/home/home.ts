@@ -137,10 +137,8 @@ export class HomePage {
       var items = await this.algoliaService.get_dashboard();
       for (var i=0;i<items.length; i++){
         delete items[i]['facets.tag'];
-        if (typeof items[i].dashboard_ranking == 'undefined'){
-          items[i].dashboard_ranking = i;
-          this.algoliaService.save_item(items[i]);
-        } 
+        items[i].dashboard_ranking = i;
+        this.algoliaService.save_item(items[i]);
       }
       //items.sort(function(a,b) {return (a.dashboard_ranking > b.dashboard_ranking) ? 1 : ((b.dashboard_ranking > a.dashboard_ranking) ? -1 : 0);} );
       this.user.dashboard = items;
