@@ -222,10 +222,10 @@ export class HomePage {
 
   async up(item) {
     try {
-      var i = this.user.dashboard.findIndex(x => x.dashboard_ranking == i);
-      var j = this.user.dashboard.findIndex(x => x.dashboard_ranking == i-1);
-      this.user.dashboard[i].dashboard_ranking = i-1;
-      this.user.dashboard[j].dashboard_ranking = i;
+      var i = this.user.dashboard.findIndex(x => x.dashboard_ranking == item.dashboard_ranking);
+      var j = this.user.dashboard.findIndex(x => x.dashboard_ranking == item.dashboard_ranking - 1);
+      this.user.dashboard[j].dashboard_ranking = item.dashboard_ranking;
+      this.user.dashboard[i].dashboard_ranking = item.dashboard_ranking-1;
       await this.algoliaService.save_item(this.user.dashboard[i]);
       await this.algoliaService.save_item(this.user.dashboard[j]);
       this.settings.saveSettings(this.user);
@@ -237,10 +237,10 @@ export class HomePage {
 
   async down(item) {
     try {
-      var i = this.user.dashboard.findIndex(x => x.dashboard_ranking == i);
-      var j = this.user.dashboard.findIndex(x => x.dashboard_ranking == i-1);
-      this.user.dashboard[i].dashboard_ranking = i+1;
-      this.user.dashboard[j].dashboard_ranking = i;
+      var i = this.user.dashboard.findIndex(x => x.dashboard_ranking == item.dashboard_ranking);
+      var j = this.user.dashboard.findIndex(x => x.dashboard_ranking == item.dashboard_ranking + 1);
+      this.user.dashboard[j].dashboard_ranking = item.dashboard_ranking;
+      this.user.dashboard[i].dashboard_ranking = item.dashboard_ranking+1;
       await this.algoliaService.save_item(this.user.dashboard[i]);
       await this.algoliaService.save_item(this.user.dashboard[j]);
       this.settings.saveSettings(this.user);
