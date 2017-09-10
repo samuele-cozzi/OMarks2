@@ -43,7 +43,7 @@ export class EditItemPage implements OnInit{
 
     this.item.time_read = Number.parseFloat(this.item.time_read);
     this.user.dashboard = [];
-    this.settingsProvider.setSettings(this.user);
+    this.settingsProvider.saveSettings(this.user);
 
     this.searchServices.save_item(this.item)
         .then(x => {

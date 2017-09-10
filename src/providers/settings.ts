@@ -51,12 +51,6 @@ export class Settings {
     }
 
     async changeAuth (){
-        // firebase.auth().onAuthStateChanged(user => {
-        //     if(user){
-        //         this.saveDefaultSettings(user);
-        //     }
-        // });
-
         firebase.auth().onAuthStateChanged((user => this.changeAuthSuccess(user)));
     }
 
@@ -75,22 +69,18 @@ export class Settings {
         }
     }
 
-    setSettings(settings: SettingsModel){
-        if(settings){
-            this.settings = settings;
-        } else {
-            firebase.auth().onAuthStateChanged(user => {
-                if(user){
-                    // this.ready(user.uid).then(settings => {
-                    //      console.log(settings.val());
-                    //      (settings.val() == null) && this.saveDefaultSettings(user);
-                    // })
-                    this.saveDefaultSettings(user);
-                }
-            });
-        }
+    // setSettings(settings: SettingsModel){
+    //     if(settings){
+    //         this.settings = settings;
+    //     } else {
+    //         firebase.auth().onAuthStateChanged(user => {
+    //             if(user){
+    //                 this.saveDefaultSettings(user);
+    //             }
+    //         });
+    //     }
         
-    }
+    // }
 
     saveDefaultSettings(user:any){
         this.storage.set("user_key", user.uid);
