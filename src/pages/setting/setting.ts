@@ -21,9 +21,14 @@ export class SettingPage{
     , private settingsProvider: Settings) {
 
       this.settings = settingsProvider.settings;
+      this.settings.menu_string = JSON.stringify(this.settings.menu);
+      this.settings.dashboard_string = JSON.stringify(this.settings.dashboard);
   }
 
   save(event){
+    this.settings.menu = JSON.parse( this.settings.menu_string);
+    this.settings.dashboard = JSON.parse( this.settings.dashboard_string);
+
     this.settingsProvider.saveSettings(this.settings).then(() => {
       let toast = this.toastCtrl.create({
         message: 'Saved!',

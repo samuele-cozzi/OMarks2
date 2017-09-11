@@ -9,5 +9,10 @@ export class SettingsModel {
     public phoneNumber: string;
     
     public algolia: AlgoliaSettings = new AlgoliaSettings();
+    
     public menu: MenuSettings[] = new Array<MenuSettings>(); 
+    public menu_string?: string;
+
+    public dashboard?: any[] = new Array();
+    public dashboard_string?: string;
 }

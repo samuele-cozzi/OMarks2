@@ -20,10 +20,7 @@ export class Settings {
             index: "oMarks2"
         },
         menu: [
-            { title: 'Home', component: 'Home' },
-            { title: 'Readme Later', component: 'Home', key: "facets.tag", value: "read-me-later"},
-            { title: 'Cloud Services', component: 'Home', key: "facets.tag", value: "cloudservices"},
-            { title: 'Settings', component: 'Settings'}
+            { title: 'Readme Later', component: 'Home', key: "facets.tag", value: "read-me-later"}
           ]
     };
 
@@ -41,6 +38,7 @@ export class Settings {
     }
 
     async ready(uid: string){
+        this.settings.uid = uid;
         var result = await firebase.database().ref("users/" + uid).once('value');
         var defaultSettings = this.settings;
         (result.val() != null) && (this.settings = result.val());
@@ -53,12 +51,6 @@ export class Settings {
     }
 
     async changeAuth (){
-        // firebase.auth().onAuthStateChanged(user => {
-        //     if(user){
-        //         this.saveDefaultSettings(user);
-        //     }
-        // });
-
         firebase.auth().onAuthStateChanged((user => this.changeAuthSuccess(user)));
     }
 
@@ -77,22 +69,18 @@ export class Settings {
         }
     }
 
-    setSettings(settings: SettingsModel){
-        if(settings){
-            this.settings = settings;
-        } else {
-            firebase.auth().onAuthStateChanged(user => {
-                if(user){
-                    // this.ready(user.uid).then(settings => {
-                    //      console.log(settings.val());
-                    //      (settings.val() == null) && this.saveDefaultSettings(user);
-                    // })
-                    this.saveDefaultSettings(user);
-                }
-            });
-        }
+    // setSettings(settings: SettingsModel){
+    //     if(settings){
+    //         this.settings = settings;
+    //     } else {
+    //         firebase.auth().onAuthStateChanged(user => {
+    //             if(user){
+    //                 this.saveDefaultSettings(user);
+    //             }
+    //         });
+    //     }
         
-    }
+    // }
 
     saveDefaultSettings(user:any){
         this.storage.set("user_key", user.uid);

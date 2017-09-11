@@ -21,7 +21,7 @@
 <ion-content padding >
   <div class="content" *ngIf="!showSearch">
     <ul>
-      <li *ngFor="let item of dashboardItems">
+      <li *ngFor="let item of user.dashboard | dashboardPipe:['1','dashboard_ranking']">
         <ion-card>
           <div (click)="open(item, $event)">
             <ion-item>
