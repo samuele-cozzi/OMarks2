@@ -6,7 +6,7 @@ import {HomePage} from '../home/home';
 import {CodeItemPage} from '../code_item/code_item';
 
 import { SettingsModel } from '../../models/settingsModel';
-import { Settings } from '../../providers/settings';
+import { OmarksSettingsProvider } from '../../providers/settings';
 
 @Component({
   selector: 'page-edit-item',
@@ -22,7 +22,7 @@ export class EditItemPage implements OnInit{
     , private navParams: NavParams
     , private toastCtrl: ToastController
     , private searchServices: AlgoliaService
-    , private settingsProvider: Settings) {
+    , private settingsProvider: OmarksSettingsProvider) {
 
       this.user = settingsProvider.getSettings();
     }

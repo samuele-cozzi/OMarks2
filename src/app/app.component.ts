@@ -8,7 +8,7 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { SettingPage } from '../pages/setting/setting';
 
-import { Settings } from '../providers/settings';
+import { OmarksSettingsProvider } from '../providers/settings';
 import { User } from '../providers/user';
 
 import { SettingsModel } from '../models/settingsModel';
@@ -23,7 +23,7 @@ export class MyApp {
 
   rootPage: any;
   user: User;
-  settingsProvider: Settings;
+  settingsProvider: OmarksSettingsProvider;
   userSettings : SettingsModel = new SettingsModel();
 
   pages: Array<MenuSettings>;
@@ -31,7 +31,7 @@ export class MyApp {
   constructor(public platform: Platform
   , public statusBar: StatusBar
   , public splashScreen: SplashScreen
-  , settingsProvider: Settings, user: User) {
+  , settingsProvider: OmarksSettingsProvider, user: User) {
     
     this.user = user;
     this.settingsProvider = settingsProvider;

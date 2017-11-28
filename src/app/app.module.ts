@@ -14,7 +14,7 @@ import { EditItemPage } from '../pages/edit_item/edit_item';
 import { LoginPage } from '../pages/login/login';
 
 
-import { Settings } from '../providers/settings';
+import { OmarksSettingsProvider } from '../providers/settings';
 import { User } from '../providers/user';
 import { AlgoliaService } from '../providers/algolia';
 
@@ -51,7 +51,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     SplashScreen,
     AlgoliaService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    {provide: Settings, useFactory: (storage: Storage) => {return new Settings(storage);}, deps: [Storage] },
+    {provide: OmarksSettingsProvider, useFactory: (storage: Storage) => {return new OmarksSettingsProvider(storage);}, deps: [Storage] },
     {provide: User, useFactory: (storage: Storage) => {return new User(storage);}, deps: [Storage] }
   ]
 })

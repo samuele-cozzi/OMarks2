@@ -6,7 +6,7 @@ import * as firebase from "firebase";
 import {SettingsModel} from '../models/settingsModel';
 
 @Injectable()
-export class Settings {
+export class OmarksSettingsProvider {
     
     settings: SettingsModel = {
         uid: '',

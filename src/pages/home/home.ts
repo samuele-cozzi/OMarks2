@@ -4,7 +4,7 @@ import { IonicPage, NavController, Searchbar, ToastController, NavParams } from 
 import { SettingsModel } from '../../models/settingsModel';
 import { Marks } from '../../models/marks';
 import { EditItemPage } from '../edit_item/edit_item';
-import { Settings } from '../../providers/settings';
+import { OmarksSettingsProvider } from '../../providers/settings';
 import { AlgoliaService } from '../../providers/algolia';
 
 
@@ -55,7 +55,7 @@ export class HomePage {
   constructor(public navCtrl: NavController,
     private navParams: NavParams,
     private toastCtrl: ToastController,
-    private settings: Settings,
+    private settings: OmarksSettingsProvider,
     private algoliaService: AlgoliaService) {
 
     this.user = settings.getSettings();

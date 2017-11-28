@@ -2,7 +2,7 @@ import { Injectable }   from '@angular/core';
 import { Http, Headers }         from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import {SettingsModel} from '../models/settingsModel';
-import {Settings} from './settings';
+import {OmarksSettingsProvider} from './settings';
 
 @Injectable()
 export class AlgoliaService {
@@ -15,7 +15,7 @@ export class AlgoliaService {
     private headers: Headers;
     private settings: SettingsModel = new SettingsModel();
 
-    constructor(private http: Http, settingsProvider: Settings) { 
+    constructor(private http: Http, settingsProvider: OmarksSettingsProvider) { 
         
         this.settings = settingsProvider.getSettings();
         this.index = this.settings.algolia.index;

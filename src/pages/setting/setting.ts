@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {IonicPage, NavController, ToastController} from 'ionic-angular';
 
 import {SettingsModel} from '../../models/settingsModel';
-import { Settings } from '../../providers/settings';
+import { OmarksSettingsProvider } from '../../providers/settings';
 
 @IonicPage({
   name: "Settings"
@@ -18,7 +18,7 @@ export class SettingPage{
 
   constructor(private navCtrl: NavController
     , private toastCtrl: ToastController
-    , private settingsProvider: Settings) {
+    , private settingsProvider: OmarksSettingsProvider) {
 
       this.settings = settingsProvider.settings;
       this.settings.menu_string = JSON.stringify(this.settings.menu);
