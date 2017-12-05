@@ -41,7 +41,8 @@
 
             <ion-card-content *ngIf="item && item.has_image == 0">{{item.excerpt}}</ion-card-content>
             <ion-card-content *ngIf="!item">{{item.excerpt}}</ion-card-content>
-            <section *ngIf="item && item.has_image == 1">
+            <ion-card-content *ngIf="!item.image">{{item.excerpt}}</ion-card-content>
+            <section *ngIf="item && item.image && item.has_image == 1">
               <img src="{{item.image.src}}" />
             </section>
           </div>
