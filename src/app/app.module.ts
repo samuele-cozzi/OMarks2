@@ -20,11 +20,6 @@ import { AlgoliaService } from '../providers/algolia';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-//import { Deeplinks } from '@ionic-native/deeplinks';
-//import { SettingsModel } from '../models/settingsModel';
-
-
-
 
 @NgModule({
   declarations: [
